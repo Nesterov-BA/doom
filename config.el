@@ -86,6 +86,7 @@
 ;; ---------------------------------------------------------------------------
 ;; LaTeX / AucTeX configuration (VimTeX equivalent)
 ;; ---------------------------------------------------------------------------
+(add-to-list 'exec-path (expand-file-name "~/.config/doom/helpers/.venv/bin"))
 (setq apheleia-log-debug-info t)
 (after! latex
   ;; --- viewer: Zathura ------------------------------------------------
