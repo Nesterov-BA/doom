@@ -2,4 +2,4 @@
 # name: Insert inline math
 # key: mi
 # --
-\( $1 \)$0
+\\( $1 \\)$0

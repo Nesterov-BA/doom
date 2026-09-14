@@ -2,6 +2,6 @@
 # name: Insert centered math
 # key: mc
 # --
-\[
+\\[
 $1
-\]$0
+\\]$0

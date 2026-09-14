@@ -23,9 +23,10 @@
 
 (add-hook 'after-change-major-mode-hook #'my/set-word-chars)
 
+(setq apheleia-log-debug-info t)
+
 ;; LaTeX / AucTeX configuration (VimTeX equivalent)
 ;; ---------------------------------------------------------------------------
-(setq apheleia-log-debug-info t)
 (after! latex
   ;; --- viewer: Zathura ------------------------------------------------
   (setq TeX-view-program-selection '((output-pdf "Zathura"))
