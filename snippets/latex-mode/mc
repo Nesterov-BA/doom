@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Insert centered math
+# key: mc
+# --
+\[
+$1
+\]$0
