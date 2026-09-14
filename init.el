@@ -69,9 +69,9 @@
        word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       dired             ; making dired pretty [functional]
+       (dired +dirvish +icons)   ; a modern file manager with previews
        electric          ; smarter, keyword-based electric-indent
-       ;;eww               ; the internet is gross
+       eww               ; the internet is gross
        ;;ibuffer           ; interactive buffer management
        tramp             ; remote files at your arthritic fingertips
        undo              ; persistent, smarter undo for your inevitable mistakes
@@ -183,7 +183,6 @@
        ;;web               ; the tubes
        yaml              ; JSON, but readable
        ;;zig               ; C, but simpler
-
        :email
        ;;(mu4e +org +gmail)
        ;;notmuch

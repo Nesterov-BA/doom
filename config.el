@@ -1,7 +1,7 @@
 (add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 (add-to-list 'exec-path (expand-file-name "~/.local/share/cargo/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.config/doom/helpers/.venv/bin"))
+(add-to-list 'exec-path (expand-file-name "/home/boris/.config/doom/helpers/.venv/bin"))
 (add-to-list 'exec-path "/usr/local/bin")
 
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 20)
@@ -15,6 +15,13 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+;; Make _ and - word constituents in every buffer.
+(defun my/set-word-chars ()
+  "Make _ and - word constituents in the current buffer."
+  (modify-syntax-entry ?_ "w")
+  (modify-syntax-entry ?- "w"))
+
+(add-hook 'after-change-major-mode-hook #'my/set-word-chars)
 
 ;; LaTeX / AucTeX configuration (VimTeX equivalent)
 ;; ---------------------------------------------------------------------------
@@ -76,3 +83,25 @@
 (set-file-template! "/Makefile$"
   :trigger "__makefile-cpp"
   :mode 'makefile-gmake-mode)
+
+(after! apheleia
+  (set-formatter! 'mbake
+    '("bash" "-c" "mbake format \"$0\" && cat \"$0\"" input)
+    :modes '(makefile-gmake-mode makefile-bsdmake-mode makefile-mode)))
+
+(defun my/cpp-compile-and-run ()
+  "Compile the current C++ file with g++ and run it in a comint buffer."
+  (interactive)
+  (let* ((src (buffer-file-name))
+         (exe (file-name-sans-extension src))
+         (default-directory (file-name-directory src)))
+    (unless (string-match-p "\\.\\(cpp\\|cc\\|cxx\\|C\\)\\'" src)
+      (user-error "Not a C++ file"))
+    (compile (format "g++ -std=c++17 -Wall -Wextra -O2 -o %s %s && echo \"-------------------------- OUTPUT --------------------------\" && %s"
+                     (shell-quote-argument exe)
+                     (shell-quote-argument src)
+                     (shell-quote-argument exe)))))
+
+(map! :map (c++-mode-map c-mode-map)
+      :localleader
+      :desc "Compile & run C++" "r" #'my/cpp-compile-and-run)
