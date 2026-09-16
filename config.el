@@ -106,3 +106,12 @@
 (map! :map (c++-mode-map c-mode-map)
       :localleader
       :desc "Compile & run C++" "r" #'my/cpp-compile-and-run)
+
+(defun my/eglot-capf ()
+  (setq-local completion-at-point-functions
+              (list (cape-capf-super
+                     #'eglot-completion-at-point
+                     #'yasnippet-capf
+                     #'cape-file))))
+
+(add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
