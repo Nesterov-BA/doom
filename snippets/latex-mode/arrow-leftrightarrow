@@ -2,4 +2,4 @@
 # name: arrow Leftrightarrow
 # key: <=>
 # --
-\Leftrightarrow
+\iff $0
