@@ -1,6 +1,7 @@
 ;;; +org.el -*- lexical-binding: t; -*-
 
 ;; Ensure snippets are prioritized in Org mode (runs BEFORE org-roam and cape)
+(set-file-template! "/org/roam/.+\\.org$" 'org-mode :ignore t)
 (defun my/org-capf-setup ()
   "Add a merged CAPF to the very front of the Org completion list."
   (add-hook 'completion-at-point-functions
@@ -25,6 +26,11 @@
   (setq org-appear-autolinks t))
 
 (after! org
+  (map! :map org-mode-map
+        :localleader
+        "u" #'org-emphasize)
+  ;; Добавляем mathtools в список пакетов, подключаемых при экспорте в LaTeX
+  (add-to-list 'org-latex-packages-alist '("" "mathtools" t))
   ;; Использовать dvisvgm для рендеринга (дает векторное, красивое изображение)
   (setq org-latex-create-formula-image-program 'dvisvgm)
   (setq org-pretty-entities nil) ; Отключает замену \alpha -> α и т.д.
@@ -43,6 +49,8 @@
             (yas-expand-snippet "\\sum\\limits_{$1}^{$2} $0"))
     "hat" (lambda () (interactive)
             (yas-expand-snippet "\\widehat\{$1\}$0"))
+    "te" (lambda () (interactive)
+           (yas-expand-snippet "\\text\{$1\}$0"))
     "RR" "\\mathbb{R}"
     "NN" "\\mathbb{N}"
     "ZZ" "\\mathbb{Z}"
