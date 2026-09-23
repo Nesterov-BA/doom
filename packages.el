@@ -51,3 +51,12 @@
 ;; (unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;; (unpin! t)
+(package! obsidian)
+(package! org-ql)                 ; язык запросов по org-файлам (замена Dataview)
+(package! org-super-agenda)       ; ОБЯЗАТЕЛЕН: org-ql жёстко зависит от него
+(package! org-transclusion)       ; GNU ELPA 1.4.0, :recipe НЕ нужен
+(package! org-special-block-extras) ; callout-блоки (тянет lf, dad-joke, lolcat)
+(package! org-roam-ui)            ; граф связей в браузере (замена Graph View)
+(package! org-pomodoro)           ; замена Statusbar Pomodoro; клавиши в Doom нет
+(package! org-fragtog)            ; авто-превью формул
+(package! laas)            ; авто-превью формул
