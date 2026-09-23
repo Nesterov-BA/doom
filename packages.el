@@ -59,4 +59,5 @@
 (package! org-roam-ui)            ; граф связей в браузере (замена Graph View)
 (package! org-pomodoro)           ; замена Statusbar Pomodoro; клавиши в Doom нет
 (package! org-fragtog)            ; авто-превью формул
-(package! laas)            ; авто-превью формул
+(package! laas)
+(package! orgmdb)            ; авто-превью формул
