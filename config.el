@@ -74,6 +74,7 @@
 (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
 
 (load! "+org")
+(load! "+markdown")
 
 (setq orgmdb-omdb-apikey "cf06fc05")
 (setq orgmdb-poster-folder nil)
