@@ -1,5 +1,6 @@
 ;;; +org.el -*- lexical-binding: t; -*-
 
+(setq system-time-locale "C")
 ;; Ensure snippets are prioritized in Org mode (runs BEFORE org-roam and cape)
 (set-file-template! "/org/roam/.+\\.org$" 'org-mode :ignore t)
 (defun my/org-capf-setup ()
