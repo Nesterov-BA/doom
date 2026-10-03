@@ -180,7 +180,7 @@
 
   (add-to-list 'org-capture-templates
                '("g" "Game" entry
-                 (file+headline "~/hdd/org/roam/mediadb/games.org" "backlog")
+                 (file+headline "~/hdd/org/roam/MediaDB/games.org" "backlog")
                  (function my-org-rawg-capture)
                  :empty-lines 1))
   (add-to-list 'org-capture-templates
