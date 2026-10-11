@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Centered math
+# key: mc
+# condition: t
+# --
+\\[
+$0
+\\]

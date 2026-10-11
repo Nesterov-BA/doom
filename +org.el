@@ -42,7 +42,11 @@
   :config
   ;; Вы можете настроить свои собственные сниппеты, если захотите
   (aas-set-snippets 'laas-mode
-    :cond #'texmathp ; Работать только в математическом режиме
+    ;; Работать только в математическом режиме И только если перед триггером НЕ буква
+    :cond (lambda ()
+            (and (texmathp)
+                 (not (and (char-before)
+                           (string-match-p "[a-zA-Z]" (string (char-before)))))))
     "supp" "\\supp"
     "On" "O(n)"
     "O1" "O(1)"
@@ -52,6 +56,8 @@
             (yas-expand-snippet "\\widehat\{$1\}$0"))
     "te" (lambda () (interactive)
            (yas-expand-snippet "\\text\{$1\}$0"))
+    "cal" (lambda () (interactive)
+            (yas-expand-snippet "\\mathcal\{$1\}$0"))
     "RR" "\\mathbb{R}"
     "NN" "\\mathbb{N}"
     "ZZ" "\\mathbb{Z}"
@@ -80,7 +86,6 @@
     "rh"  "\\rho"
     "si"  "\\sigma"
     "Si"  "\\Sigma"
-    "ta"  "\\tau"
     "up"  "\\upsilon"
     "Up"  "\\Upsilon"
     "ph"  "\\varphi"
@@ -164,6 +169,8 @@
 (after! org
   (setq org-startup-with-inline-images t)
   (setq org-image-actual-width '(600))
+  (add-to-list 'org-emphasis-alist
+               '("@" (:weight bold :slant italic) t t))
   (defun my-org-rawg-capture ()
     "Capture template: prompt for a game and return Org text."
     (let* ((query (read-string "Game title: "))
