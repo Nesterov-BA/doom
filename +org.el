@@ -34,11 +34,14 @@
   (add-to-list 'org-latex-packages-alist '("" "mathtools" t))
   ;; Использовать dvisvgm для рендеринга (дает векторное, красивое изображение)
   (setq org-latex-create-formula-image-program 'dvisvgm)
+  (setq org-startup-with-latex-preview t)
   (setq org-pretty-entities nil) ; Отключает замену \alpha -> α и т.д.
   (setq org-pretty-entities-include-sub-superscripts nil) ; Отключает замену ^2 -> ²
   )
 (use-package! laas
-  :hook (org-mode . laas-mode) ; Можно включить и в Org-mode!
+  :hook ((org-mode   . laas-mode)
+         (LaTeX-mode . laas-mode)
+         (latex-mode . laas-mode)) ; Можно включить и в Org-mode!
   :config
   ;; Вы можете настроить свои собственные сниппеты, если захотите
   (aas-set-snippets 'laas-mode
@@ -46,7 +49,7 @@
     :cond (lambda ()
             (and (texmathp)
                  (not (and (char-before)
-                           (string-match-p "[a-zA-Z]" (string (char-before)))))))
+                           (string-match-p "[a-zA-Z\\\\]" (string (char-before)))))))
     "supp" "\\supp"
     "On" "O(n)"
     "O1" "O(1)"
@@ -95,7 +98,6 @@
     "Ps"  "\\Psi"
     "om"  "\\omega"
     "Om"  "\\Omega"
-    ;; ... и так далее
     ))
 
 
