@@ -60,4 +60,5 @@
 (package! org-pomodoro)           ; замена Statusbar Pomodoro; клавиши в Doom нет
 (package! org-fragtog)            ; авто-превью формул
 (package! laas)
-(package! orgmdb)            ; авто-превью формул
+(package! orgmdb)
+(package! rainbow-mode)

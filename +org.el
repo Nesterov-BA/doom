@@ -27,6 +27,21 @@
   (setq org-appear-autolinks t))
 
 (after! org
+
+  (defface my-org-emphasis-bold
+    '((default :inherit bold)
+      (((class color) (min-colors 88) (background light)) :foreground "#fabd2f")
+      (((class color) (min-colors 88) (background dark)) :foreground "#fabd2f"))
+    "A colored bold face for org mode")
+
+  (setq org-emphasis-alist
+        '(("*" my-org-emphasis-bold)
+          ("/" italic)
+          ("_" underline)
+          ("=" org-verbatim verbatim)
+          ("~" org-code verbatim)
+          ("+" (:strike-through t))))
+
   (map! :map org-mode-map
         :localleader
         "u" #'org-emphasize)
@@ -61,6 +76,8 @@
            (yas-expand-snippet "\\text\{$1\}$0"))
     "cal" (lambda () (interactive)
             (yas-expand-snippet "\\mathcal\{$1\}$0"))
+    "norm" (lambda () (interactive)
+             (yas-expand-snippet "\\|$1\\|$0"))
     "RR" "\\mathbb{R}"
     "NN" "\\mathbb{N}"
     "ZZ" "\\mathbb{Z}"

@@ -4,9 +4,9 @@
 (add-to-list 'exec-path (expand-file-name "/home/boris/.config/doom/helpers/.venv/bin"))
 (add-to-list 'exec-path "/usr/local/bin")
 
-(setq doom-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 20)
-      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 20)
-      doom-big-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 24)
+(setq doom-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 22)
+      doom-variable-pitch-font (font-spec :family "JetBrainsMono Nerd Font" :size 22)
+      doom-big-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 26)
       doom-symbol-font (font-spec :family "JetBrainsMono Nerd Font Mono"))
 (setq doom-theme 'doom-gruvbox)
 (setq display-line-numbers-type 'relative)
@@ -78,3 +78,13 @@
 
 (setq orgmdb-omdb-apikey "cf06fc05")
 (setq orgmdb-poster-folder nil)
+(after! hl-todo
+  (setq hl-todo-keyword-faces
+        '(("TODO"   . (:background "#e5c07b" :foreground "#282c34" :weight bold))
+          ("NOTE"   . (:background "#98c379" :foreground "#282c34" :weight bold)) ; Зеленый фон
+          ("FIXME"  . (:background "#e06c75" :foreground "#282c34" :weight bold))
+          ("HACK"   . (:background "#c678dd" :foreground "#282c34" :weight bold))
+          ("REVIEW" . (:background "#56b6c2" :foreground "#282c34" :weight bold)))))
+
+(use-package! rainbow-mode
+  :hook ((emacs-lisp-mode   . rainbow-mode)))
