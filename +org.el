@@ -31,16 +31,41 @@
   (defface my-org-emphasis-bold
     '((default :inherit bold)
       (((class color) (min-colors 88) (background light)) :foreground "#fabd2f")
-      (((class color) (min-colors 88) (background dark)) :foreground "#fabd2f"))
+      (((class color) (min-colors 88) (background dark))  :foreground "#fabd2f"))
     "A colored bold face for org mode")
+
+  (defface my-org-emphasis-italic
+    '((default :inherit italic)
+      (((class color) (min-colors 88) (background light)) :foreground "#b8bb26")
+      (((class color) (min-colors 88) (background dark))  :foreground "#b8bb26"))
+    "A colored italic face for org mode")
+
+  (defface my-org-emphasis-underline
+    '((default :inherit underline)
+      (((class color) (min-colors 88) (background light)) :foreground "#83a598")
+      (((class color) (min-colors 88) (background dark))  :foreground "#83a598"))
+    "A colored underline face for org mode")
+
+  (defface my-org-emphasis-verbatim
+    '((default :inherit org-verbatim)
+      (((class color) (min-colors 88) (background light)) :foreground "#d3869b")
+      (((class color) (min-colors 88) (background dark))  :foreground "#d3869b"))
+    "A colored verbatim face for org mode")
+
+  (defface my-org-emphasis-code
+    '((default :inherit org-code)
+      (((class color) (min-colors 88) (background light)) :foreground "#8ec07c")
+      (((class color) (min-colors 88) (background dark))  :foreground "#8ec07c"))
+    "A colored code face for org mode")
 
   (setq org-emphasis-alist
         '(("*" my-org-emphasis-bold)
-          ("/" italic)
-          ("_" underline)
-          ("=" org-verbatim verbatim)
-          ("~" org-code verbatim)
+          ("/" my-org-emphasis-italic)
+          ("_" my-org-emphasis-underline)
+          ("=" my-org-emphasis-verbatim verbatim)
+          ("~" my-org-emphasis-code verbatim)
           ("+" (:strike-through t))))
+
 
   (map! :map org-mode-map
         :localleader
@@ -60,62 +85,62 @@
   :config
   ;; Вы можете настроить свои собственные сниппеты, если захотите
   (aas-set-snippets 'laas-mode
-    ;; Работать только в математическом режиме И только если перед триггером НЕ буква
-    :cond (lambda ()
-            (and (texmathp)
-                 (not (and (char-before)
-                           (string-match-p "[a-zA-Z\\\\]" (string (char-before)))))))
-    "supp" "\\supp"
-    "On" "O(n)"
-    "O1" "O(1)"
-    "sum" (lambda () (interactive)
-            (yas-expand-snippet "\\sum\\limits_{$1}^{$2} $0"))
-    "hat" (lambda () (interactive)
-            (yas-expand-snippet "\\widehat\{$1\}$0"))
-    "te" (lambda () (interactive)
-           (yas-expand-snippet "\\text\{$1\}$0"))
-    "cal" (lambda () (interactive)
-            (yas-expand-snippet "\\mathcal\{$1\}$0"))
-    "norm" (lambda () (interactive)
-             (yas-expand-snippet "\\|$1\\|$0"))
-    "RR" "\\mathbb{R}"
-    "NN" "\\mathbb{N}"
-    "ZZ" "\\mathbb{Z}"
-    "QQ" "\\mathbb{Q}"
-    "co"  "\\colon"
-    "al"  "\\alpha"
-    "Al"  "\\mathcal{A}"
-    "be"  "\\beta"
-    "ga"  "\\gamma"
-    "Ga"  "\\Gamma"
-    "de"  "\\delta"
-    "De"  "\\Delta"
-    "ep"  "\\varepsilon"
-    "ze"  "\\zeta"
-    "et"  "\\eta"
-    "th"  "\\theta"
-    "Th"  "\\Theta"
-    "io"  "\\iota"
-    "ka"  "\\varkappa"
-    "la"  "\\lambda"
-    "La"  "\\Lambda"
-    "mu"  "\\mu"
-    "nu"  "\\nu"
-    "pi"  "\\pi"
-    "Pi"  "\\Pi"
-    "rh"  "\\rho"
-    "si"  "\\sigma"
-    "Si"  "\\Sigma"
-    "up"  "\\upsilon"
-    "Up"  "\\Upsilon"
-    "ph"  "\\varphi"
-    "Ph"  "\\Phi"
-    "ch"  "\\chi"
-    "ps"  "\\psi"
-    "Ps"  "\\Psi"
-    "om"  "\\omega"
-    "Om"  "\\Omega"
-    ))
+                    ;; Работать только в математическом режиме И только если перед триггером НЕ буква
+                    :cond (lambda ()
+                            (and (texmathp)
+                                 (not (and (char-before)
+                                           (string-match-p "[a-zA-Z\\\\]" (string (char-before)))))))
+                    "supp" "\\supp"
+                    "On" "O(n)"
+                    "O1" "O(1)"
+                    "sum" (lambda () (interactive)
+                            (yas-expand-snippet "\\sum\\limits_{$1}^{$2} $0"))
+                    "hat" (lambda () (interactive)
+                            (yas-expand-snippet "\\widehat\{$1\}$0"))
+                    "te" (lambda () (interactive)
+                           (yas-expand-snippet "\\text\{$1\}$0"))
+                    "cal" (lambda () (interactive)
+                            (yas-expand-snippet "\\mathcal\{$1\}$0"))
+                    "norm" (lambda () (interactive)
+                             (yas-expand-snippet "\\|$1\\|$0"))
+                    "RR" "\\mathbb{R}"
+                    "NN" "\\mathbb{N}"
+                    "ZZ" "\\mathbb{Z}"
+                    "QQ" "\\mathbb{Q}"
+                    "co"  "\\colon"
+                    "al"  "\\alpha"
+                    "Al"  "\\mathcal{A}"
+                    "be"  "\\beta"
+                    "ga"  "\\gamma"
+                    "Ga"  "\\Gamma"
+                    "de"  "\\delta"
+                    "De"  "\\Delta"
+                    "ep"  "\\varepsilon"
+                    "ze"  "\\zeta"
+                    "et"  "\\eta"
+                    "th"  "\\theta"
+                    "Th"  "\\Theta"
+                    "io"  "\\iota"
+                    "ka"  "\\varkappa"
+                    "la"  "\\lambda"
+                    "La"  "\\Lambda"
+                    "mu"  "\\mu"
+                    "nu"  "\\nu"
+                    "pi"  "\\pi"
+                    "Pi"  "\\Pi"
+                    "rh"  "\\rho"
+                    "si"  "\\sigma"
+                    "Si"  "\\Sigma"
+                    "up"  "\\upsilon"
+                    "Up"  "\\Upsilon"
+                    "ph"  "\\varphi"
+                    "Ph"  "\\Phi"
+                    "ch"  "\\chi"
+                    "ps"  "\\psi"
+                    "Ps"  "\\Psi"
+                    "om"  "\\omega"
+                    "Om"  "\\Omega"
+                    ))
 
 
 (defun my-org-media-capture ()
