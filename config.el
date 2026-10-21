@@ -10,8 +10,11 @@
       doom-symbol-font (font-spec :family "JetBrainsMono Nerd Font Mono"))
 (setq doom-theme 'doom-gruvbox)
 (setq display-line-numbers-type 'relative)
-
-
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+(require 'org-protocol)
+(require 'org-roam-protocol)
 ;; Make _ and - word constituents in every buffer.
 (defun my/set-word-chars ()
   "Make _ and - word constituents in the current buffer."
@@ -88,3 +91,11 @@
 
 (use-package! rainbow-mode
   :hook ((emacs-lisp-mode   . rainbow-mode)))
+(defun my/markdown-to-org ()
+  "Convert current Markdown file to Org format using Pandoc."
+  (interactive)
+  (let* ((md-file (buffer-file-name))
+         (org-file (concat (file-name-sans-extension md-file) ".org")))
+    (shell-command (format "pandoc -f markdown+tex_math_dollars+tex_math_single_backslash -t org -o %s %s" org-file md-file))
+    (find-file org-file)
+    (message "Converted to %s" org-file)))
