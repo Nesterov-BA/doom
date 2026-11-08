@@ -45,7 +45,11 @@
 (after! apheleia
   (set-formatter! 'mbake
     '("bash" "-c" "mbake format \"$0\" && cat \"$0\"" input)
-    :modes '(makefile-gmake-mode makefile-bsdmake-mode makefile-mode)))
+    :modes '(makefile-gmake-mode makefile-bsdmake-mode makefile-mode))
+  (set-formatter! 'python-json '("python3" "-m" "json.tool") :modes '(json-mode json-ts-mode))
+  (setf (alist-get 'json-mode apheleia-mode-alist) 'python-json)
+  (setf (alist-get 'json-ts-mode apheleia-mode-alist) 'python-json)
+  )
 
 (defun my/cpp-compile-and-run ()
   "Compile the current C++ file with g++ and run it in a comint buffer."
@@ -72,6 +76,10 @@
                      #'cape-file))))
 
 (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
+(after! eglot
+  (setq eglot-server-programs
+        '((python-mode . ("pyright-langserver" "--stdio"))
+          (python-ts-mode . ("pyright-langserver" "--stdio")))))
 
 (load! "+org")
 (load! "+markdown")
