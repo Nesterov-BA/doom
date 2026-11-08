@@ -73,7 +73,8 @@
   ;; Добавляем mathtools в список пакетов, подключаемых при экспорте в LaTeX
   (add-to-list 'org-latex-packages-alist '("" "mathtools" t))
   ;; Использовать dvisvgm для рендеринга (дает векторное, красивое изображение)
-  (setq org-latex-create-formula-image-program 'dvisvgm)
+  (setq org-preview-latex-default-process 'dvisvgm)
+  ;; (setq org-latex-create-formula-image-program 'dvisvgm)
   (setq org-startup-with-latex-preview t)
   (setq org-pretty-entities nil) ; Отключает замену \alpha -> α и т.д.
   (setq org-pretty-entities-include-sub-superscripts nil) ; Отключает замену ^2 -> ²
@@ -85,62 +86,62 @@
   :config
   ;; Вы можете настроить свои собственные сниппеты, если захотите
   (aas-set-snippets 'laas-mode
-                    ;; Работать только в математическом режиме И только если перед триггером НЕ буква
-                    :cond (lambda ()
-                            (and (texmathp)
-                                 (not (and (char-before)
-                                           (string-match-p "[a-zA-Z\\\\]" (string (char-before)))))))
-                    "supp" "\\supp"
-                    "On" "O(n)"
-                    "O1" "O(1)"
-                    "sum" (lambda () (interactive)
-                            (yas-expand-snippet "\\sum\\limits_{$1}^{$2} $0"))
-                    "hat" (lambda () (interactive)
-                            (yas-expand-snippet "\\widehat\{$1\}$0"))
-                    "te" (lambda () (interactive)
-                           (yas-expand-snippet "\\text\{$1\}$0"))
-                    "cal" (lambda () (interactive)
-                            (yas-expand-snippet "\\mathcal\{$1\}$0"))
-                    "norm" (lambda () (interactive)
-                             (yas-expand-snippet "\\|$1\\|$0"))
-                    "RR" "\\mathbb{R}"
-                    "NN" "\\mathbb{N}"
-                    "ZZ" "\\mathbb{Z}"
-                    "QQ" "\\mathbb{Q}"
-                    "co"  "\\colon"
-                    "al"  "\\alpha"
-                    "Al"  "\\mathcal{A}"
-                    "be"  "\\beta"
-                    "ga"  "\\gamma"
-                    "Ga"  "\\Gamma"
-                    "de"  "\\delta"
-                    "De"  "\\Delta"
-                    "ep"  "\\varepsilon"
-                    "ze"  "\\zeta"
-                    "et"  "\\eta"
-                    "th"  "\\theta"
-                    "Th"  "\\Theta"
-                    "io"  "\\iota"
-                    "ka"  "\\varkappa"
-                    "la"  "\\lambda"
-                    "La"  "\\Lambda"
-                    "mu"  "\\mu"
-                    "nu"  "\\nu"
-                    "pi"  "\\pi"
-                    "Pi"  "\\Pi"
-                    "rh"  "\\rho"
-                    "si"  "\\sigma"
-                    "Si"  "\\Sigma"
-                    "up"  "\\upsilon"
-                    "Up"  "\\Upsilon"
-                    "ph"  "\\varphi"
-                    "Ph"  "\\Phi"
-                    "ch"  "\\chi"
-                    "ps"  "\\psi"
-                    "Ps"  "\\Psi"
-                    "om"  "\\omega"
-                    "Om"  "\\Omega"
-                    ))
+    ;; Работать только в математическом режиме И только если перед триггером НЕ буква
+    :cond (lambda ()
+            (and (texmathp)
+                 (not (and (char-before)
+                           (string-match-p "[a-zA-Z\\\\]" (string (char-before)))))))
+    "supp" "\\supp"
+    "On" "O(n)"
+    "O1" "O(1)"
+    "sum" (lambda () (interactive)
+            (yas-expand-snippet "\\sum\\limits_{$1}^{$2} $0"))
+    "hat" (lambda () (interactive)
+            (yas-expand-snippet "\\widehat\{$1\}$0"))
+    "te" (lambda () (interactive)
+           (yas-expand-snippet "\\text\{$1\}$0"))
+    "cal" (lambda () (interactive)
+            (yas-expand-snippet "\\mathcal\{$1\}$0"))
+    "norm" (lambda () (interactive)
+             (yas-expand-snippet "\\|$1\\|$0"))
+    "RR" "\\mathbb{R}"
+    "NN" "\\mathbb{N}"
+    "ZZ" "\\mathbb{Z}"
+    "QQ" "\\mathbb{Q}"
+    "co"  "\\colon"
+    "al"  "\\alpha"
+    "Al"  "\\mathcal{A}"
+    "be"  "\\beta"
+    "ga"  "\\gamma"
+    "Ga"  "\\Gamma"
+    "de"  "\\delta"
+    "De"  "\\Delta"
+    "ep"  "\\varepsilon"
+    "ze"  "\\zeta"
+    "et"  "\\eta"
+    "th"  "\\theta"
+    "Th"  "\\Theta"
+    "io"  "\\iota"
+    "ka"  "\\varkappa"
+    "la"  "\\lambda"
+    "La"  "\\Lambda"
+    "mu"  "\\mu"
+    "nu"  "\\nu"
+    "pi"  "\\pi"
+    "Pi"  "\\Pi"
+    "rh"  "\\rho"
+    "si"  "\\sigma"
+    "Si"  "\\Sigma"
+    "up"  "\\upsilon"
+    "Up"  "\\Upsilon"
+    "ph"  "\\varphi"
+    "Ph"  "\\Phi"
+    "ch"  "\\chi"
+    "ps"  "\\psi"
+    "Ps"  "\\Psi"
+    "om"  "\\omega"
+    "Om"  "\\Omega"
+    ))
 
 
 (defun my-org-media-capture ()
@@ -240,3 +241,12 @@
                  (file+headline "~/HDD/org/roam/MediaDB/movies.org" "Watchlist")
                  (function my-org-media-capture)
                  :empty-lines 1)))
+;; ✅ ADD as a top-level form (after! org-roam ...)
+(after! org-roam
+  (setq org-roam-capture-ref-templates
+        '(("r" "ref" plain
+           "* Source\n${ref}\n\n#+begin_quote\n${body}\n#+end_quote\n\n%?"
+           :target (file+head "web/${slug}.org"
+                              "#+title: ${title}\n#+STARTUP: nolatexpreview\n:PROPERTIES:\n:ROAM_REFS: ${ref}\n:END:\n#+created: %u\n")
+           :immediate-finish t
+           :unnarrowed t))))
