@@ -94,8 +94,20 @@
 (defun my/markdown-to-org ()
   "Convert current Markdown file to Org format using Pandoc."
   (interactive)
-  (let* ((md-file (buffer-file-name))
-         (org-file (concat (file-name-sans-extension md-file) ".org")))
-    (shell-command (format "pandoc -f markdown+tex_math_dollars+tex_math_single_backslash -t org -o %s %s" org-file md-file))
-    (find-file org-file)
-    (message "Converted to %s" org-file)))
+  (let ((md-file (buffer-file-name)))
+    (unless md-file
+      (user-error "Buffer is not visiting a file"))
+    (let* ((org-file (concat (file-name-sans-extension md-file) ".org"))
+           (status
+            (process-file
+             "pandoc" nil "*pandoc*" nil
+             "-f" "markdown+tex_math_dollars+tex_math_single_backslash"
+             "-t" "org"
+             "-o" org-file
+             md-file)))
+      (if (and (integerp status) (zerop status))
+          (progn
+            (find-file org-file)
+            (message "Converted to %s" org-file))
+        (display-buffer "*pandoc*")
+        (user-error "Pandoc failed (status %s); see *pandoc* buffer" status)))))

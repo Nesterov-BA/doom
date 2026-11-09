@@ -102,6 +102,8 @@
            (yas-expand-snippet "\\text\{$1\}$0"))
     "cal" (lambda () (interactive)
             (yas-expand-snippet "\\mathcal\{$1\}$0"))
+    "mbb" (lambda () (interactive)
+            (yas-expand-snippet "\\mathbb\{$1\}$0"))
     "norm" (lambda () (interactive)
              (yas-expand-snippet "\\|$1\\|$0"))
     "RR" "\\mathbb{R}"
@@ -250,3 +252,18 @@
                               "#+title: ${title}\n#+STARTUP: nolatexpreview\n:PROPERTIES:\n:ROAM_REFS: ${ref}\n:END:\n#+created: %u\n")
            :immediate-finish t
            :unnarrowed t))))
+;; --- Performance settings ---
+(setq process-adaptive-read-buffering nil)
+(setq process-connection-type nil)
+(setq read-process-output-max (* 64 1024))
+;; (setq org-preview-latex-default-process 'dvipng)
+
+;; --- Use the async engine if available (Org 9.7+) ---
+(when (boundp 'org-latex-preview-use-async)
+  (setq org-latex-preview-use-async t))
+
+;; --- Disable org-roam autosync if you experience freezes ---
+;; (org-roam-autosync-mode -1) ; Uncomment to disable
+
+;; --- Consider org-fragtog for on-demand previews ---
+;; (add-hook 'org-mode-hook #'org-fragtog-mode)
