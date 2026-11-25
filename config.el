@@ -23,6 +23,7 @@
 
 (add-hook 'after-change-major-mode-hook #'my/set-word-chars)
 
+
 (setq ispell-alternate-dictionary "~/.local/share/dict/all.words")
 
 (setq apheleia-log-debug-info t)
@@ -80,15 +81,20 @@
 
 (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
 (after! eglot
-  (setq eglot-server-programs
-        '((python-mode . ("pyright-langserver" "--stdio"))
-          (python-ts-mode . ("pyright-langserver" "--stdio")))))
+  (add-to-list 'eglot-server-programs
+               '(python-mode . ("pyright-langserver" "--stdio")))
+  (add-to-list 'eglot-server-programs
+               '(python-ts-mode . ("pyright-langserver" "--stdio"))))
 
-(load! "+org")
-(load! "+markdown")
-
+(setq my/rawg-api-key "4e394795884c4968bb06288ad423a2fd")
 (setq orgmdb-omdb-apikey "cf06fc05")
 (setq orgmdb-poster-folder nil)
+
+(load! "+org")
+(load! "+addmedia")
+(load! "+mediadb")
+(load! "+markdown")
+
 (after! hl-todo
   (setq hl-todo-keyword-faces
         '(("TODO"   . (:background "#e5c07b" :foreground "#282c34" :weight bold))
